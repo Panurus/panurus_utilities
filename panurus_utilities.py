@@ -1,3 +1,48 @@
+def check_version(desired_version = "3.6.8"):
+    """
+    Will check python version and advise on action to be taken based on desired version of python.
+    
+    Arguments:
+    desired_version -- str. Desired python version (i.e. earliest version of python that code has been tested on.)
+    
+    """
+    import sys
+    import re
+    v = sys.version_info
+    vAll = int(str(v.major)+str(v.minor)+str(v.micro))
+    # des_v = re.split("/.", desired_version)
+    des_v_numeric = int(re.sub("\.", "", desired_version))
+    
+    
+    if  vAll > des_v_numeric:
+        print("You are using python version "
+              + str(v.major)
+              + "."
+              + str(v.minor)
+              + "."
+              + str(v.micro)
+              + ". \n This code is not tested on versions later than "
+              + desired_version
+              + ". It is advisable to roll back to "
+              + desired_version
+              + ".")
+    elif vAll < des_v_numeric:
+        print("You are using python version "
+              + str(v.major)
+              + "."
+              + str(v.minor)
+              + "."
+              + str(v.micro)
+              + ". \n This code is untested on python versions prior to "
+              + desired_version
+              + ".")
+    elif vAll == des_v_numeric:
+        print("python version "
+              + desired_version
+              + "is installed and being used for this session. \n"
+              "C'est parfait. Forward march!")
+
+
 def install_module(module, install = True, conda_or_pip = "pip", print_terminal = True, verbose = False):
     """Allows installation of a module directly from a notebook or script.
     Improves reproducibility of scripting/ notebook usage, where installed modules may differ between users.
